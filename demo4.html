@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>鸭式辩形模仿接口</title>
+	<script>
+		//Interface
+		var Composite=new Interface('Composite',['add','remove','getChild']);
+		var FormItem=new Interface('FormItem',['save']);
+
+		//CompositeForm class
+		var CompositeForm=function(id,method,action){
+			...
+		};
+
+		function addForm(formInstance){
+			ensureImplements(formInstance,Composite,FormItem);
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

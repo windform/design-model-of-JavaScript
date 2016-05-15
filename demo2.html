@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>javascript prototype</title>
+	<script>
+		function foo(a,b){
+			return a*b;
+		}
+		function Gadget(color,name){
+			this.name=name;
+			this.color=color;
+			this.whatAreYou=function(){
+				return 'I am a '+this.color+' '+this.name
+			}
+		}
+		Gadget.prototype.price=100;
+		Gadget.prototype.rating=3;
+		Gadget.prototype.getInfo=function(){
+			return 'price: '+this.price+' ,rating: '+this.rating;
+		}
+		var a=[1,2,3,5,7,9,0]
+		for(var i in a){
+			console.log(a[i]);
+		}
+		var o={p1:'hello',p2:'java'}
+		for(var i in o){
+			console.log(i+' = '+o[i]);
+		}
+		var monkey={
+			hair:true,
+			feeds:'bananas',
+			breathes:'air'
+		}
+		function Human(name){
+			this.name=name
+		}
+		Human.prototype=monkey;
+		Array.prototype.inArray=function(needle){
+			for(var i=0, len=this.length; i<len; i++){
+				if(this[i]===needle){
+					return true;
+				}
+			}
+			return false;
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

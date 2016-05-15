@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单例模式</title>
+	<style>
+	.red{
+		width: 200px;
+		height: 200px;
+		background-color: red;
+
+	}
+	</style>
+</head>
+<body>
+
+	<button id="openWin">点击弹出窗口</button>
+
+
+
+
+
+	
+
+<script>
+	//单例模式的定义:保证一个类仅有一个实例，并提供一个访问它的全局点
+	//实现
+	var Singleton=function(name){
+		this.name=name;
+		this.instance=null;
+	}
+	Singleton.prototype.getName=function(){
+		alert(this.name);
+	}
+	Singleton.prototype.getInstance=function(){
+		if(!this.instance){
+			this.instance=new Singleton(name);
+		}
+		return this.instance;
+	}
+
+	// var a=Singleton.getInstance('sven1');
+	// var b=Singleton.getInstance('sven2');
+
+
+	//透明的单例模式
+	/*var CreateDiv=(function(){
+		var instance;
+		var CreateDiv=function(html){
+			if(instance){
+				return instance
+			}
+			this.html=html;
+			this.init();
+			return instance=this;
+		};
+		CreateDiv.prototype.init=function(){
+			var div=document.createElement('div');
+			div.innerHTML=this.html;
+			document.body.appendChild(div);
+		};
+		return CreateDiv;
+	})();
+	var c=new CreateDiv('sven1');
+	var d=new CreateDiv('sven2');
+	console.log(c===d);*/
+
+	//用代理模式实现单例模式
+	var CreateDiv=function(html){
+		this.html=html;
+		this.init();
+	};
+	CreateDiv.prototype.init=function(){
+		var div=document.createElement('div');
+		div.innerHTML=this.html;
+		document.body.appendChild(div);
+	};
+	//引入代理类proxySingletonCreateDiv
+	var ProxySingletonCreateDiv=(function(){
+		var instance;
+		return function(html){
+			if(!instance){
+				instance=new CreateDiv(html);
+			}
+			return instance;
+		}
+
+	})()
+
+	var c=new ProxySingletonCreateDiv("sven1");
+	var d=new ProxySingletonCreateDiv("sven2");
+	console.log(c===d);
+
+
+	window.onload=function(){
+		document.getElementById("openWin").onclick=function(){
+			var layout=function(){
+				var div=document.createElement('div');
+				div.className="red";
+				document.body.appendChild(div);
+				return div;
+			}
+			var ui=getSingle(layout);
+			ui();
+		}
+	}
+
+
+	//惰性单例的实践
+	/*var openWin=(function(result){
+				var div;
+				return function(){
+				if(!div){
+					div=result;
+					console.log(div);
+				}
+				return div;		
+				}
+			})()*/
+
+
+	
+
+	
+
+	//通用的单例模式
+	var getSingle=function(fn){
+		var result;
+		return function(){
+			return result || (result=fn.apply(this,arguments));
+		}
+	}
+
+</script>
+</body>
+</html>
