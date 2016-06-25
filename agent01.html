@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>虚拟代理实现图片预加载</title>
+</head>
+<body>
+	<script>
+		//虚拟代理实现图片预加载
+		var myImage = (function(){
+			var imgNode = document.createElement('img');
+			document.body.appendChild(imgNode);
+
+			return {
+				setSrc : function(src){
+					imgNode.src = src;
+				}
+			}
+		})();
+
+		var proxyImage = (function(){
+			var img = new Image;
+			img.onload = function(){
+				myImage.setSrc( this.src );
+			}
+			return {
+				setSrc : function( src ){
+					myImage.setSrc('./img/a2.gif');
+					img.src = src;
+				}
+			}
+		})();
+
+		proxyImage.setSrc('http://imgcache.qq.com/music/photo/k/000GGDys0yA0Nk.jpg');
+		//proxyImage.setSrc('./img/heading.jpg');
+	</script>
+	
+</body>
+</html>
