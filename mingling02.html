@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>命令模式-宏命令</title>
+</head>
+<body>
+
+	<button id="button1">点击按钮1</button>
+	<button id="button2">点击按钮2</button>
+	<button id="button3">点击按钮3</button>
+	
+	<script>
+
+	window.onload = function(){
+
+		var closeDoorCommand = {
+			execute : function(){
+				alert('关门')
+			}
+		};
+		var openPcCommand = {
+			execute : function(){
+				alert('打开电脑')
+			}
+		};
+		var openQQCommand ={
+			execute : function(){
+				alert('登陆QQ')
+			}
+		};
+
+		var MacroCommand = function(){
+			return {
+				commandsList : [],
+				add : function(command){
+					this.commandsList.push(command);
+				},
+				execute : function(){
+					for(var i=0,command; command = this.commandsList[i++];){
+						command.execute();
+					}
+				}
+			}
+		};
+
+		var macroCommand = MacroCommand();
+		macroCommand.add(closeDoorCommand);
+		macroCommand.add(openPcCommand);
+		macroCommand.add(openQQCommand);
+
+		macroCommand.execute();
+
+		
+	}
+	</script>
+</body>
+</html>
